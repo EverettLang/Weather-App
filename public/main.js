@@ -1,3 +1,7 @@
+ /*
+    Main function for calling a search.
+    Determines if user is searching based on City or Cooordinates.
+*/
 function search(unit){
     const regexExp = /^((\-?|\+?)?\d+(\.\d+)?)\s*(,|\s)\s*(\s*|-)\s*((\-?|\+?)?\d+(\.\d+)?)$/gi;
     if(regexExp.test(document.querySelector(".search-bar").value)){
@@ -20,6 +24,9 @@ function search(unit){
       
 }
 
+ /*
+    Server fetch call for city search
+*/
 async function fetchCity(city, unit){
     const url = `/weatherCity/${city}/${unit}`;
     const response = await fetch(url);
@@ -28,6 +35,9 @@ async function fetchCity(city, unit){
     displayWeather(json, unit)  
 }
 
+ /*
+    Server fetch call for coordinates search
+*/
 async function fetchCoordinates(lat, lon, unit){
     const url = `/weatherCoordinates/${lat}/${lon}/${unit}`;
     const response = await fetch(url);
@@ -38,6 +48,9 @@ async function fetchCoordinates(lat, lon, unit){
     displayWeather(json, unit)  
 }
 
+ /*
+    Helper function that displays needed API json data to clients screen
+*/
 function displayWeather(data, unit){
 
     const name = (data.name !== "" ? data.name : 'N/A');  
@@ -95,7 +108,10 @@ function displayWeather(data, unit){
     document.querySelector(".weather").style.cssText = "display: contents";
 }
 
-//Runs Search if Mouse clicked mag glass
+
+ /*
+    Runs Search if Mouse clicked mag glass
+*/
 document.querySelector(".enter-button").addEventListener("click", function(){
     //checking Temp Unit
     if(document.querySelector(".unit-icon").title == "C"){
@@ -109,7 +125,10 @@ document.querySelector(".enter-button").addEventListener("click", function(){
     
 });
 
-//Runs Search if "Enter" key is pressed
+
+ /*
+    Runs Search if "Enter" key is pressed
+*/
 document.querySelector(".search-bar").addEventListener("keypress", function(e){
     if(e.key == 'Enter'){
         //Checking Temp Unit
@@ -124,8 +143,10 @@ document.querySelector(".search-bar").addEventListener("keypress", function(e){
     }
 });
 
-//Sets unit toggle div when clicked.
-//If a search already happened it will toggle units for displayed search
+ /*
+    Sets unit toggle div when clicked.
+    If a search already happened it will toggle units for displayed search
+*/
 document.querySelector(".unit-icon").addEventListener("click", function(event){
     if(this.title == "C"){
         this.title = "F";
